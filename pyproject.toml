@@ -1,0 +1,9 @@
+[project]
+name = "checklist-semanal"
+version = "1.0.0"
+description = "Checklist semanal de lunes a viernes"
+requires-python = ">=3.10"
+dependencies = ["flet>=1.0"]
+
+[tool.flet]
+product = "Checklist semanal"
