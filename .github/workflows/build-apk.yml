@@ -1,0 +1,38 @@
+name: Compilar APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Preparar el ícono
+        run: |
+          mkdir -p assets
+          [ -f assets/icon.png ] || cp icon.png assets/icon.png
+
+      - name: Instalar Flet
+        run: pip install flet flet-cli
+
+      - name: Compilar el APK
+        run: flet build apk --yes -v
+
+      - name: Guardar el APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: checklist-apk
+          path: build/apk
